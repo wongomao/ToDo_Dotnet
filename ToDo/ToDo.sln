@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Console", "ToDo.Console\ToDo.Console.csproj", "{94D4356D-5373-4006-8EB4-B6E089B0065B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Console", "ToDo.Console\ToDo.Console.csproj", "{94D4356D-5373-4006-8EB4-B6E089B0065B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Api", "ToDo.Api\ToDo.Api.csproj", "{D1E36EE4-B8F9-41A2-B4AF-F1857321D41D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Shared", "ToDo.Shared\ToDo.Shared.csproj", "{95D0A528-EDF4-4B03-A587-F56FE66AFF07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{94D4356D-5373-4006-8EB4-B6E089B0065B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D4356D-5373-4006-8EB4-B6E089B0065B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D4356D-5373-4006-8EB4-B6E089B0065B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E36EE4-B8F9-41A2-B4AF-F1857321D41D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E36EE4-B8F9-41A2-B4AF-F1857321D41D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E36EE4-B8F9-41A2-B4AF-F1857321D41D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E36EE4-B8F9-41A2-B4AF-F1857321D41D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95D0A528-EDF4-4B03-A587-F56FE66AFF07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D0A528-EDF4-4B03-A587-F56FE66AFF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D0A528-EDF4-4B03-A587-F56FE66AFF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D0A528-EDF4-4B03-A587-F56FE66AFF07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
