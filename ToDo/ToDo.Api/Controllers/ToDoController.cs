@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
 using ToDo.Shared;
 
 namespace ToDo.Api.Controllers
@@ -11,6 +12,10 @@ namespace ToDo.Api.Controllers
 
         public ToDoController(IToDoRepository toDoRepository)
         {
+            if (toDoRepository == null)
+            {
+                throw new ArgumentNullException(nameof(toDoRepository));
+            }
             _toDoRepository = toDoRepository;
         }
 
@@ -24,7 +29,9 @@ namespace ToDo.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ToDoItem>> GetToDoAsync(int id)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var toDo = await _toDoRepository.GetToDoAsync(id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (toDo == null)
             {
                 return NotFound();

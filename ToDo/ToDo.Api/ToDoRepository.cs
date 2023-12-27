@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using ToDo.Shared;
 
 namespace ToDo.Api
@@ -34,9 +35,31 @@ namespace ToDo.Api
             throw new NotImplementedException();
         }
 
+        [return: MaybeNull]
         public Task<ToDoItem> GetToDoAsync(int id)
         {
-            throw new NotImplementedException();
+            _connection.Open();
+            var command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+                SELECT todo_id, description, done
+                FROM todo
+                WHERE todo_id = @id";
+            command.Parameters.AddWithValue("@id", id);
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    var todoItem = new ToDoItem(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetBoolean(2)
+                    );
+                    _connection.Close();
+                    return Task.FromResult(todoItem);
+                }
+            }
+            return Task.FromResult<ToDoItem>(null!);
         }
 
         public Task<IEnumerable<ToDoItem>> GetToDosAsync()
