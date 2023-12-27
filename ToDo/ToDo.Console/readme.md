@@ -130,7 +130,6 @@ ED25519 key fingerprint is SHA256:QXqu3FKxN8X2tMAQ7NB1gEbv7f0G4p3QbhB75UYn/9I.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 Warning: Permanently added '192.168.1.114' (ED25519) to the list of known hosts.
-norman@192.168.1.114's password:
 Microsoft.Data.Sqlite.dll                                                             100%  169KB 169.0KB/s   00:00
 SQLitePCLRaw.batteries_v2.dll                                                         100% 5120     5.0KB/s   00:00
 SQLitePCLRaw.core.dll                                                                 100%   50KB   3.1MB/s   00:00
