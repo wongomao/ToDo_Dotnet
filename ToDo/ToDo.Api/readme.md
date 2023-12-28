@@ -6,6 +6,7 @@ Publish Configuration
     - Target Framework: net8.0
     - Target Runtime: linux-x64
 
+Publish via Visual Studio to folder.
 After *publish*, copy (scp) the files to the linux server:
 ```
 PS > scp .\bin\Release\net8.0\publish\* norman@192.168.1.114:/home/norman/dv/todo_api
@@ -27,36 +28,9 @@ nuget.config                                                                    
 todo.sqlite.db                                                                        100% 8192     8.0KB/s   00:00
 ```
 
-```
-norman@annapurna:~/dv/todo_api$ sudo iptables --list
-[sudo] password for norman:
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination
-norman@annapurna:~/dv/todo_api$ sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-norman@annapurna:~/dv/todo_api$ sudo iptables -A INPUT -p tcp --dport 5000 -j ACCEPT
-norman@annapurna:~/dv/todo_api$ sudo iptables --list
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination
-ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
-ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:5000
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination
-
-```
-
 Run it on linux:
 `$ dotnet ./ToDo.Api.dll`
 Note: If there's no endpoint configuration, then Kestrel binds to http://localhost:5000. So that run command will only work for localhost 'curl' commands. In order to run it for other endpoints there are options.
 An easy one is to run it like:
-`$dotnet ./ToDo.Api.dll --urls http://0.0.0.0:5000`
+`$ dotnet ./ToDo.Api.dll --urls http://0.0.0.0:5000`
 See [Kestrel configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-8.0)
