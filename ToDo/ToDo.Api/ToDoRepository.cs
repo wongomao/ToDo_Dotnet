@@ -25,18 +25,41 @@ namespace ToDo.Api
         //    Console.WriteLine("REPO: Disposing");
         //}
 
-        public Task<ToDoItem> AddToDoAsync(ToDoItem toDoItem)
+        public async Task<ToDoItem> AddToDoAsync(ToDoItem toDoItem)
         {
-            throw new NotImplementedException();
+            _connection.Open();
+
+            var command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+                INSERT INTO todo (description, done)
+                VALUES (@description, @done);
+                SELECT last_insert_rowid();";
+            command.Parameters.AddWithValue("@description", toDoItem.Description);
+            command.Parameters.AddWithValue("@done", toDoItem.IsComplete);
+            var id = await command.ExecuteScalarAsync();
+            toDoItem.Id = Convert.ToInt32(id);
+
+            _connection.Close();
+            return toDoItem;
         }
 
-        public Task DeleteToDoAsync(int id)
+        public async Task DeleteToDoAsync(int id)
         {
-            throw new NotImplementedException();
+            _connection.Open();
+            var command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+                DELETE FROM todo
+                WHERE todo_id = @id";
+            command.Parameters.AddWithValue("@id", id);
+            await command.ExecuteNonQueryAsync();
+
+            _connection.Close();
         }
 
         [return: MaybeNull]
-        public Task<ToDoItem> GetToDoAsync(int id)
+        public async Task<ToDoItem> GetToDoAsync(int id)
         {
             _connection.Open();
             var command = _connection.CreateCommand();
@@ -46,7 +69,7 @@ namespace ToDo.Api
                 FROM todo
                 WHERE todo_id = @id";
             command.Parameters.AddWithValue("@id", id);
-            using (var reader = command.ExecuteReader())
+            using (var reader = await command.ExecuteReaderAsync())
             {
                 if (reader.Read())
                 {
@@ -56,13 +79,14 @@ namespace ToDo.Api
                         reader.GetBoolean(2)
                     );
                     _connection.Close();
-                    return Task.FromResult(todoItem);
+                    //return Task.FromResult(todoItem);
+                    return todoItem;
                 }
             }
-            return Task.FromResult<ToDoItem>(null!);
+            return null!;
         }
 
-        public Task<IEnumerable<ToDoItem>> GetToDosAsync()
+        public async Task<IEnumerable<ToDoItem>> GetToDosAsync()
         {
             var toDoItems = new List<ToDoItem>();
             _connection.Open();
@@ -71,7 +95,7 @@ namespace ToDo.Api
                 @"
                SELECT todo_id, description, done
                 FROM todo";
-            using (var reader = command.ExecuteReader())
+            using (var reader = await command.ExecuteReaderAsync())
             {
                 while (reader.Read())
                 {
@@ -84,12 +108,27 @@ namespace ToDo.Api
                 }
             }
             _connection.Close();
-            return Task.FromResult<IEnumerable<ToDoItem>>(toDoItems);
+            return toDoItems;
         }
 
-        public Task<ToDoItem> UpdateToDoAsync(ToDoItem toDoItem)
+        public async Task<ToDoItem> UpdateToDoAsync(ToDoItem toDoItem)
         {
-            throw new NotImplementedException();
+            _connection.Open();
+
+            var command = _connection.CreateCommand();
+            command.CommandText =
+                @"
+                UPDATE todo
+                SET description = @description,
+                    done = @done
+                WHERE todo_id = @id";
+            command.Parameters.AddWithValue("@description", toDoItem.Description);
+            command.Parameters.AddWithValue("@done", toDoItem.IsComplete);
+            command.Parameters.AddWithValue("@id", toDoItem.Id);
+            await command.ExecuteNonQueryAsync();
+
+            _connection.Close();
+            return toDoItem;
         }
     }
 }

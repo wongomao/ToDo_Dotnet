@@ -19,15 +19,17 @@ namespace ToDo.Api.Controllers
             _toDoRepository = toDoRepository;
         }
 
+        // GET: api/ToDo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ToDoItem>>> GetToDosAsync()
+        public async Task<ActionResult<IEnumerable<ToDoItem>>> GetToDos()
         {
             var toDos = await _toDoRepository.GetToDosAsync();
             return Ok(toDos);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ToDoItem>> GetToDoAsync(int id)
+        // GET: api/ToDo/5
+        [HttpGet("{id}", Name =nameof(GetToDo))]
+        public async Task<ActionResult<ToDoItem>> GetToDo([FromRoute]int id)
         {
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
             var toDo = await _toDoRepository.GetToDoAsync(id);
@@ -39,22 +41,25 @@ namespace ToDo.Api.Controllers
             return Ok(toDo);
         }
 
+        // POST: api/ToDo
         [HttpPost]
-        public async Task<ActionResult<ToDoItem>> AddToDoAsync(ToDoItem toDoItem)
+        public async Task<ActionResult<ToDoItem>> AddToDo([FromBody]ToDoItem toDoItem)
         {
             var toDo = await _toDoRepository.AddToDoAsync(toDoItem);
-            return CreatedAtAction(nameof(GetToDoAsync), new { id = toDo.Id }, toDo);
+            return CreatedAtAction(nameof(GetToDo), new { id = toDo.Id }, toDo);
         }
 
+        // PUT: api/ToDo
         [HttpPut]
-        public async Task<ActionResult<ToDoItem>> UpdateToDoAsync(ToDoItem toDoItem)
+        public async Task<ActionResult<ToDoItem>> UpdateToDo([FromBody]ToDoItem toDoItem)
         {
             var toDo = await _toDoRepository.UpdateToDoAsync(toDoItem);
             return Ok(toDo);
         }
 
+        // DELETE: api/ToDo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteToDoAsync(int id)
+        public async Task<ActionResult> DeleteToDo([FromRoute]int id)
         {
             await _toDoRepository.DeleteToDoAsync(id);
             return NoContent();

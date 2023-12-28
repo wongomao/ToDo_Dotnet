@@ -6,6 +6,13 @@
         public string Description { get; set; } = string.Empty;
         public bool IsComplete { get; set; } = false;
 
+        public ToDoItem()
+        {
+            Id = 0;
+            Description = string.Empty;
+            IsComplete = false;
+        }
+
         public ToDoItem(string description)
         {
             Id = 0;
